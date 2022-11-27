@@ -1,0 +1,17 @@
+- Q: Logistic Regression belongs to each class?
+- C: Supervised Learning
+- A1: Unsupervised Learning
+- A2: Reinforcement Learning
+- A3: -
+- A4: -
+- A5: -
+- T: machineLearning, supervisedLearning, ai
+
+- Q: KMeans belongs to each class?
+- C: Unsupervised Learning
+- A1: Supervised Learning
+- A2: Reinforcement Learning
+- A3: -
+- A4: -
+- A5: -
+- T: machineLearning, unsupervisedLearning, clustering

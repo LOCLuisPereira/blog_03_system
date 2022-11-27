@@ -34,9 +34,12 @@ Example, #this #is #a #set #of #tags.
         - Fake population.
         - Showing what is inside database.
         - Function to run queries.
+- Parsing.
+    - Process files.
+        - **Remember**: hard required structure.
     
 # Doing
-- Parsing.
+- Loading.
 
 # ToDo
 - Database.
