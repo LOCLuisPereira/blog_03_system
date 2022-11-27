@@ -37,9 +37,10 @@ Example, #this #is #a #set #of #tags.
 - Parsing.
     - Process files.
         - **Remember**: hard required structure.
+- Loading.
+    - Run the parser and load data inside the database.
     
 # Doing
-- Loading.
 
 # ToDo
 - Database.
