@@ -39,7 +39,15 @@ Example, #this #is #a #set #of #tags.
         - **Remember**: hard required structure.
 - Loading.
     - Run the parser and load data inside the database.
-    
+
+- Admin Dashboard.
+    - Select side menu for action selection.
+        - Counting stats.
+        - Visualize Files.
+        - Visualize Flashcards.
+        - Visualize Multiple.
+    - The dashboard can be used for viewing data, some minor stats, tags and check if the database, parser and loader are performing the correct operations.
+
 # Doing
 
 # ToDo
