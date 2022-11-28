@@ -1,5 +1,4 @@
 import streamlit as st
-
 st.set_page_config(
     page_title='House Data EDA',
     layout='wide'
@@ -10,6 +9,7 @@ st.set_page_config(
 
 
 
+import pandas as pd
 import sqlite3
 conn = sqlite3.connect( 'knowledge_database.db' )
 
@@ -106,12 +106,12 @@ elif menuChoice == 'Files' :
         f'''## {item[0]}'''
 
         tags = [ it[0] for it in getFileTags(item[0]) ]
-        tags.sort()
-
         if len(tags) :
+            tags.sort()
+
+            t = pd.DataFrame.from_dict({'tags':tags}) 
             '''#### Tags'''
-            for tag in tags :
-                f'''- {tag}'''
+            st.dataframe(t)
 
 elif menuChoice == 'Flashcards' :
     '''# Flashcards'''
@@ -121,12 +121,12 @@ elif menuChoice == 'Flashcards' :
         st.info(item[2])
 
         tags = [ it[0] for it in getFlashcardTags(item[0]) ]
-        tags.sort()
-
         if len(tags) :
+            tags.sort()
+
+            t = pd.DataFrame.from_dict({'tags':tags}) 
             '''#### Tags'''
-            for tag in tags :
-                f'''- {tag}'''
+            st.dataframe(t)
 
 elif menuChoice == 'Multiple Choices' :
     '''# Multiple Questions'''
@@ -140,9 +140,9 @@ elif menuChoice == 'Multiple Choices' :
                 st.error( item[i] )
         
         tags = [ it[0] for it in getMultipleTags(item[0]) ]
-        tags.sort()
-
         if len(tags) :
+            tags.sort()
+
+            t = pd.DataFrame.from_dict({'tags':tags})
             '''#### Tags'''
-            for tag in tags :
-                f'''- {tag}'''
+            st.dataframe(t)
