@@ -16,6 +16,13 @@ conn = sqlite3.connect( 'knowledge_database.db' )
 
 
 
+def intersection(xs, ys) :
+    zs = [x for x in xs if x in ys ]
+    return zs
+
+
+
+
 def getTotalFiles() :
     cursor = conn.cursor()
     result = cursor.execute('select count(distinct file) from tag').fetchall()
@@ -30,7 +37,6 @@ def getTotalMultiple() :
     cursor = conn.cursor()
     result = cursor.execute('select count(question) from multiple').fetchall()
     return result[0][0]
-
 
 def getFiles() :
     cursor = conn.cursor()
@@ -72,6 +78,23 @@ def getMultipleTags(id) :
     result = cursor.execute(query).fetchall()
     return result
 
+def getFilesAllTags() :
+    cursor = conn.cursor()
+    result = cursor.execute('select distinct tag from tag').fetchall()
+    xs = [x[0] for x in result]
+    return xs
+
+def getFlashcardAllTags() :
+    cursor = conn.cursor()
+    result = cursor.execute('select distinct tag from flashcardTag').fetchall()
+    xs = [x[0] for x in result]
+    return xs
+
+def getMultipleAllTags() :
+    cursor = conn.cursor()
+    result = cursor.execute('select distinct tag from multipleTag').fetchall()
+    xs = [x[0] for x in result]
+    return xs
 
 
 
@@ -79,6 +102,10 @@ menuChoice = st.sidebar.selectbox(
     'Main page',
     ['Main', 'Files', 'Flashcards', 'Multiple Choices']
 )
+
+
+
+
 
 
 if menuChoice == 'Main' :
@@ -99,50 +126,77 @@ if menuChoice == 'Main' :
             value = getTotalMultiple()
         )
 
+
+
+
+
+
 elif menuChoice == 'Files' :
     '''# Files'''
 
+    selectedTags = st.multiselect('Choose tags...', getFilesAllTags())
+
     for item in getFiles() :
-        f'''## {item[0]}'''
-
         tags = [ it[0] for it in getFileTags(item[0]) ]
-        if len(tags) :
-            tags.sort()
+        if len(intersection(tags, selectedTags)) or not len(selectedTags):
 
-            t = pd.DataFrame.from_dict({'tags':tags}) 
-            '''#### Tags'''
-            st.dataframe(t)
+            f'''## {item[0]}'''
+
+            if len(tags) :
+                tags.sort()
+
+                t = pd.DataFrame.from_dict({'tags':tags}) 
+                '''#### Tags'''
+                st.dataframe(t)
+
+
+
+
+
 
 elif menuChoice == 'Flashcards' :
     '''# Flashcards'''
 
+    selectedTags = st.multiselect('Choose tags...', getFlashcardAllTags())
+
     for item in getFlashcard() :
-        f'''## {item[0]}. {item[1]}'''
-        st.info(item[2])
-
         tags = [ it[0] for it in getFlashcardTags(item[0]) ]
-        if len(tags) :
-            tags.sort()
+        if len(intersection(tags, selectedTags)) or not len(selectedTags):
 
-            t = pd.DataFrame.from_dict({'tags':tags}) 
-            '''#### Tags'''
-            st.dataframe(t)
+            f'''## {item[0]}. {item[1]}'''
+            st.info(item[2])
+
+            if len(tags) :
+                tags.sort()
+
+                t = pd.DataFrame.from_dict({'tags':tags}) 
+                '''#### Tags'''
+                st.dataframe(t)
+
+
+
+
+
 
 elif menuChoice == 'Multiple Choices' :
     '''# Multiple Questions'''
 
+    selectedTags = st.multiselect('Choose tags...', getMultipleAllTags())
+
     for item in getMultiple() :
 
-        f'''## {item[0]}. {item[1]}'''
-        st.success(item[2])
-        for i in range(3, 8) :
-            if item[i] :
-                st.error( item[i] )
-        
         tags = [ it[0] for it in getMultipleTags(item[0]) ]
-        if len(tags) :
-            tags.sort()
+        if len(intersection(tags, selectedTags)) or not len(selectedTags):
 
-            t = pd.DataFrame.from_dict({'tags':tags})
-            '''#### Tags'''
-            st.dataframe(t)
+            f'''## {item[0]}. {item[1]}'''
+            st.success(item[2])
+            for i in range(3, 8) :
+                if item[i] :
+                    st.error( item[i] )
+
+            if len(tags) :
+                tags.sort()
+
+                t = pd.DataFrame.from_dict({'tags':tags})
+                '''#### Tags'''
+                st.dataframe(t)

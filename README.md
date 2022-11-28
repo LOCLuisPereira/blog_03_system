@@ -47,6 +47,7 @@ Example, #this #is #a #set #of #tags.
         - Visualize Flashcards.
         - Visualize Multiple.
     - The dashboard can be used for viewing data, some minor stats, tags and check if the database, parser and loader are performing the correct operations.
+    - Allows filtering by tag union.
 
 # Doing
 
